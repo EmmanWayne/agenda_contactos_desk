@@ -32,6 +32,7 @@ public class IniciarSistema {
 			VentanaContactos contactos = new VentanaContactos();
 			contactos.setVisible(true);
 			contactos.setLocationRelativeTo(null);
+			contactos.obtenerUltimoId();
 			contactos.txtNombre.requestFocus();
 			Timer time = new Timer();
 			time.schedule(contactos.tarea, 0, 1000);

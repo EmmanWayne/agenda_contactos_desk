@@ -75,12 +75,12 @@ public class AcercaDe extends JFrame {
 
 		lbl3 = new JLabel("by Lic. Emmanuel Díaz");
 		lbl3.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl3.setFont(new Font("Arial Black", Font.BOLD, 20));
+		lbl3.setFont(new Font("Arial Black", Font.BOLD, 18));
 		lbl3.setBounds(8, 153, 462, 41);
 		contentPane.add(lbl3);
 
 		JLabel lblLogo_1 = new JLabel("");
-		lblLogo_1.setBounds(76, 220, 218, 222);
+		lblLogo_1.setBounds(74, 216, 212, 218);
 		contentPane.add(lblLogo_1);
 		final ImageIcon icono2 = new ImageIcon(
 				logo.getImage().getScaledInstance(lblLogo_1.getWidth(), lblLogo_1.getHeight(), Image.SCALE_DEFAULT));
@@ -89,15 +89,15 @@ public class AcercaDe extends JFrame {
 		txt4 = new JTextArea();
 		txt4.setText(
 				"    Todos los derechos reservados a:\r\n           Programador y Diseñador:\r\n              Lic. Cristian Emmanuel \r\n                    Díaz Rodríguez\r\n_________________________________________\r\n Contacto: krizemandiaz11@gmail.com\r\n Teléfono: +504 8883-9089 \r\n El Paraíso, El Paraíso - Honduras 2020.\r\n");
-		txt4.setFont(new Font("Arial", Font.PLAIN, 20));
+		txt4.setFont(new Font("Arial", Font.PLAIN, 18));
 		txt4.setEditable(false);
-		txt4.setBounds(44, 471, 386, 203);
+		txt4.setBounds(74, 461, 336, 203);
 		contentPane.add(txt4);
 
 		lbl2 = new JLabel("AGENDA DE CONTACTOS");
 		lbl2.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl2.setFont(new Font("Arial Black", Font.BOLD, 28));
-		lbl2.setBounds(8, 118, 462, 41);
+		lbl2.setBounds(8, 112, 462, 41);
 		contentPane.add(lbl2);
 
 		JButton btnNewButton = new JButton("Regresar");
@@ -114,8 +114,8 @@ public class AcercaDe extends JFrame {
 			}
 		});
 		btnNewButton.setBackground(new Color(255, 165, 0));
-		btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 25));
-		btnNewButton.setBounds(134, 30, 202, 34);
+		btnNewButton.setFont(new Font("Arial Black", Font.BOLD, 20));
+		btnNewButton.setBounds(159, 37, 155, 34);
 		contentPane.add(btnNewButton);
 
 		btnWhatsApp = new JButton("");
@@ -126,7 +126,7 @@ public class AcercaDe extends JFrame {
 		});
 		btnWhatsApp.setFont(new Font("Franklin Gothic Heavy", Font.BOLD | Font.ITALIC, 25));
 		btnWhatsApp.setBackground(Color.WHITE);
-		btnWhatsApp.setBounds(304, 284, 90, 90);
+		btnWhatsApp.setBounds(298, 278, 90, 90);
 		contentPane.add(btnWhatsApp);
 		final ImageIcon icono11 = new ImageIcon(logoW.getImage().getScaledInstance(btnWhatsApp.getWidth(),
 				btnWhatsApp.getHeight(), Image.SCALE_DEFAULT));

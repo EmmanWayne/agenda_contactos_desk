@@ -82,6 +82,13 @@ public class VentanaContactos extends JFrame {
 
 	public JLabel lblFecha;
 	public JLabel lblHora;
+	
+	private JLabel lblIconoFecha;
+	private JLabel lblIconoHora;
+	private JLabel lblIconoContacto;
+	private JLabel lblContacto;
+	private JLabel lblLogo;
+	private JLabel lblAcercaDe;
 
 	public static String totalDatos;
 	public JTable tabla;
@@ -90,11 +97,12 @@ public class VentanaContactos extends JFrame {
 	String filtroCodigo;
 	public JTextField txtBuscar;
 	public JButton btnGuardar, btnActualizar, btnEliminar, btnEditar, btnLimpiar;
+	final ImageIcon foto = new ImageIcon(getClass().getResource("/Recursos/foto.png"));
 
 	public VentanaContactos() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 800);
+		setBounds(100, 100, 950, 810);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -198,7 +206,7 @@ public class VentanaContactos extends JFrame {
 		btnActualizar.setForeground(Color.WHITE);
 		btnActualizar.setBackground(new Color(0, 128, 128));
 		btnActualizar.setFont(new Font("Arial", Font.BOLD, 12));
-		btnActualizar.setBounds(273, 604, 109, 27);
+		btnActualizar.setBounds(141, 604, 109, 27);
 		panel_2_1_1.add(btnActualizar);
 		btnActualizar.addActionListener(new ActionListener() {
 			@Override
@@ -243,11 +251,12 @@ public class VentanaContactos extends JFrame {
 		JLabel lblN = new JLabel("N°:");
 		lblN.setForeground(Color.BLACK);
 		lblN.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
-		lblN.setBounds(273, 52, 38, 27);
+		lblN.setBounds(10, 42, 38, 27);
 		panel_2_1_1.add(lblN);
 
 		lblId = new JLabel("");
-		lblId.setBounds(307, 52, 75, 27);
+		lblId.setForeground(new Color(0, 128, 0));
+		lblId.setBounds(58, 42, 75, 27);
 		panel_2_1_1.add(lblId);
 		lblId.setHorizontalAlignment(SwingConstants.CENTER);
 		lblId.setFont(new Font("Segoe UI Black", Font.PLAIN, 15));
@@ -286,6 +295,9 @@ public class VentanaContactos extends JFrame {
 
 		lblFotografia = new JLabel("");
 		lblFotografia.setBounds(57, 11, 260, 260);
+		final ImageIcon icono8 = new ImageIcon(logo4.getImage().getScaledInstance(lblFotografia.getWidth(),
+				lblFotografia.getHeight(), Image.SCALE_DEFAULT));
+		lblFotografia.setIcon(icono8);
 
 		JButton btnAdjuntar = new JButton("Adjuntar");
 		btnAdjuntar.setForeground(Color.WHITE);
@@ -299,27 +311,6 @@ public class VentanaContactos extends JFrame {
 			}
 		});
 
-		JButton btnVer = new JButton("Ver");
-		btnVer.setForeground(Color.WHITE);
-		btnVer.setFont(new Font("Arial", Font.BOLD, 12));
-		btnVer.setBackground(new Color(0, 128, 128));
-		btnVer.setBounds(142, 273, 109, 27);
-		panel_2_1_1.add(btnVer);
-		btnVer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (txtFotografia.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "No hay fotografía que mostrar");
-				}else {
-					visor_imagen visor = new visor_imagen();
-					String ruta_foto = txtFotografia.getText().toString();
-					visor.txtRutaImagen.setText(ruta_foto);
-					visor.setLocationRelativeTo(null);
-					visor.setVisible(true);
-					visor.txtRutaImagen.requestFocus();
-				}
-			}
-		});
-
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new LineBorder(new Color(0, 128, 128), 2));
 		panel_3.setBounds(10, 311, 372, 282);
@@ -328,32 +319,32 @@ public class VentanaContactos extends JFrame {
 		panel_3.add(lblFotografia);
 
 		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setBounds(273, 11, 109, 27);
+		btnLimpiar.setBounds(273, 604, 109, 27);
 		panel_2_1_1.add(btnLimpiar);
 		btnLimpiar.setForeground(Color.BLACK);
 		btnLimpiar.setBackground(Color.WHITE);
 		btnLimpiar.setFont(new Font("Arial", Font.BOLD, 12));
 
 		txtFotografia = new JTextField();
-		txtFotografia.setBounds(273, 273, 109, 26);
-		panel_2_1_1.add(txtFotografia);
 		txtFotografia.setEditable(false);
+		txtFotografia.setBounds(129, 273, 253, 26);
+		panel_2_1_1.add(txtFotografia);
 		txtFotografia.setToolTipText("");
 		txtFotografia.setFont(new Font("Segoe UI Black", Font.PLAIN, 12));
 		txtFotografia.setColumns(10);
 		
 		lblIconoContacto = new JLabel("");
-		lblIconoContacto.setBounds(194, 11, 69, 68);
+		lblIconoContacto.setBounds(307, 11, 69, 68);
 		panel_2_1_1.add(lblIconoContacto);
 		final ImageIcon icono4 = new ImageIcon(logo4.getImage().getScaledInstance(lblIconoContacto.getWidth(),
 				lblIconoContacto.getHeight(), Image.SCALE_DEFAULT));
 		lblIconoContacto.setIcon(icono4);
 		
-		lblContacto = new JLabel("REGISTRO");
+		lblContacto = new JLabel("REGISTRO DE CONTACTO");
 		lblContacto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblContacto.setForeground(Color.BLACK);
 		lblContacto.setFont(new Font("Segoe UI Black", Font.BOLD, 18));
-		lblContacto.setBounds(10, 11, 174, 68);
+		lblContacto.setBounds(10, 11, 372, 27);
 		panel_2_1_1.add(lblContacto);
 
 		btnLimpiar.addActionListener(new ActionListener() {
@@ -470,8 +461,8 @@ public class VentanaContactos extends JFrame {
 		txtBuscar.setBounds(77, 58, 266, 27);
 		panel_2.add(txtBuscar);
 		
-				JLabel lblRegistros = new JLabel("LISTA");
-				lblRegistros.setBounds(10, 11, 266, 27);
+				JLabel lblRegistros = new JLabel("LISTA DE CONTACTOS");
+				lblRegistros.setBounds(10, 11, 452, 27);
 				panel_2.add(lblRegistros);
 				lblRegistros.setForeground(new Color(0, 0, 0));
 				lblRegistros.setFont(new Font("Segoe UI Black", Font.BOLD, 18));
@@ -488,7 +479,7 @@ public class VentanaContactos extends JFrame {
 		panel_2_1_1_1.add(btnEditar);
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Arial", Font.BOLD, 12));
-		btnEditar.setBackground(new Color(255, 215, 0));
+		btnEditar.setBackground(new Color(255, 160, 122));
 
 		lblFecha = new JLabel("Fecha");
 		lblFecha.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -810,12 +801,7 @@ public class VentanaContactos extends JFrame {
 			lblHora.setText(horas + ":" + minutos + ":" + segundos + " " + ampm);
 		}
 	};
-	private JLabel lblIconoFecha;
-	private JLabel lblIconoHora;
-	private JLabel lblIconoContacto;
-	private JLabel lblContacto;
-	private JLabel lblLogo;
-	private JLabel lblAcercaDe;
+	
 
 	public static String getFecha() {
 		Date date = new Date();
@@ -838,6 +824,9 @@ public class VentanaContactos extends JFrame {
 		txtTelefono.setText("");
 		txtCorreo.setText("");
 		txtFotografia.setText("");
+		final ImageIcon icono8 = new ImageIcon(foto.getImage().getScaledInstance(lblFotografia.getWidth(),
+				lblFotografia.getHeight(), Image.SCALE_DEFAULT));
+		lblFotografia.setIcon(icono8);
 	}
 
 	public void selecionarLogo() {
