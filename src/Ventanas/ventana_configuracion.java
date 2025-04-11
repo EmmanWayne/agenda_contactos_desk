@@ -371,9 +371,9 @@ public class ventana_configuracion extends JFrame {
 					clase.setId_empresa(Integer.parseInt(lblId.getText().toString()));
 
 					if (consulta.actualizar(clase)) {
-						JOptionPane.showMessageDialog(null, "¡Actualización Exitosa!");
+						JOptionPane.showMessageDialog(null, "ï¿½Actualizaciï¿½n Exitosa!");
 					} else {
-						JOptionPane.showMessageDialog(null, "¡Error de Actualización!");
+						JOptionPane.showMessageDialog(null, "ï¿½Error de Actualizaciï¿½n!");
 					}
 				}
 			}
@@ -402,11 +402,11 @@ public class ventana_configuracion extends JFrame {
 					clase.setFecha_limite_facturas(txtFechaLimite.getText().toString());
 
 					if (consulta.insertar(clase)) {
-						JOptionPane.showMessageDialog(null, "¡Registro Exitoso!");
+						JOptionPane.showMessageDialog(null, "ï¿½Registro Exitoso!");
 						btnActualizar.setVisible(true);
 						btnGuardar.setVisible(false);
 					} else {
-						JOptionPane.showMessageDialog(null, "¡Error de registro!");
+						JOptionPane.showMessageDialog(null, "ï¿½Error de registro!");
 					}
 				}
 			}
@@ -416,7 +416,7 @@ public class ventana_configuracion extends JFrame {
 	}
 
 	private void close() {
-		if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir del sistema?", "Salir del sistema",
+		if (JOptionPane.showConfirmDialog(rootPane, "ï¿½Desea realmente salir del sistema?", "Salir del sistema",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 			System.exit(0);
 	}
@@ -427,7 +427,7 @@ public class ventana_configuracion extends JFrame {
 				"jpeg");
 		archivo.addChoosableFileFilter(filtro);
 		archivo.setDialogTitle("Abrir Archivo");
-		File ruta = new File("\\\\" + conexion.urlGlobal + "\\C:\\");
+		File ruta = new File("\\\\" + onexion.urlGlobal + "\\C:\\");
 		archivo.setCurrentDirectory(ruta);
 		int ventana = archivo.showOpenDialog(null);
 		if (ventana == JFileChooser.APPROVE_OPTION) {

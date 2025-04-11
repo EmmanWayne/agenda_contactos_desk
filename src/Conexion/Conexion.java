@@ -1,4 +1,4 @@
-package conexion;
+package Conexion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class conexion {
+public class Conexion {
 
-	private final String base = "bd_sia";
+	private final String base = "ageda_db";
 	private final String user = "root";
-	private final String password = "1234";
+	private final String password = "";
 	public static String urlGlobal = "localhost";
 	private final String url = "jdbc:mysql://" + urlGlobal + "/" + base;
 	private Connection con = null;
@@ -22,7 +22,7 @@ public class conexion {
 		} catch (SQLException e) {
 			System.err.println(e);
 		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return con;
 	}

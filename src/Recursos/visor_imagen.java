@@ -1,4 +1,4 @@
-package recursos;
+package Recursos;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
@@ -49,7 +49,7 @@ public class visor_imagen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setTitle("Visor by Designing Art.");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/recursos/logo_sistema.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/Recursos/contactos.png")));
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
