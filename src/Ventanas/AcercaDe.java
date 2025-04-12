@@ -1,33 +1,26 @@
 package Ventanas;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
 import java.awt.Color;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Image;
-
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import java.awt.event.KeyListener;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class AcercaDe extends JFrame {
 
@@ -103,6 +96,7 @@ public class AcercaDe extends JFrame {
 		JButton btnNewButton = new JButton("Regresar");
 		btnNewButton.setForeground(Color.WHITE);
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				VentanaContactos contactos = new VentanaContactos();
 				contactos.setVisible(true);
@@ -120,6 +114,7 @@ public class AcercaDe extends JFrame {
 
 		btnWhatsApp = new JButton("");
 		btnWhatsApp.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				goToURL("https://wa.me/50488839089?text=%C2%A1Hola%20mucho%20gusto!%20estoy%20interesad@%20en%20tu%20trabajo,%20%C2%BFpodemos%20hablar%20un%20poco?");
 			}
@@ -151,8 +146,9 @@ public class AcercaDe extends JFrame {
 
 	private void close() {
 		if (JOptionPane.showConfirmDialog(rootPane, "¿Desea cerrar la calculadora?", "",
-				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			System.exit(0);
+		}
 	}
 
 }

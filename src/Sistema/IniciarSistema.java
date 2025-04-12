@@ -1,11 +1,12 @@
 package Sistema;
 
 import java.util.Timer;
-import javax.swing.JFrame;
-import Ventanas.VentanaContactos;
+
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import Ventanas.VentanaContactos;
 
 public class IniciarSistema {
 
@@ -28,12 +29,15 @@ public class IniciarSistema {
 		}
 
 		try {
-			
+
 			VentanaContactos contactos = new VentanaContactos();
 			contactos.setVisible(true);
 			contactos.setLocationRelativeTo(null);
 			contactos.obtenerUltimoId();
 			contactos.txtNombre.requestFocus();
+			contactos.obtenerUltimoId();
+			contactos.construirTabla();
+			contactos.btnActualizar.setEnabled(false);
 			Timer time = new Timer();
 			time.schedule(contactos.tarea, 0, 1000);
 
