@@ -159,6 +159,7 @@ public class VentanaContactos extends JFrame {
 		txtTelefono.setColumns(10);
 
 		btnGuardar = new JButton("");
+		btnGuardar.setToolTipText("Boton Guardar - Inf: Guarda el registro en la base de datos.");
 		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.setBackground(new Color(0, 128, 0));
 		btnGuardar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
@@ -208,6 +209,7 @@ public class VentanaContactos extends JFrame {
 		});
 
 		btnActualizar = new JButton("");
+		btnActualizar.setToolTipText("Boton Actualizar - Inf: Actualiza el registro en la base de datos.");
 		btnActualizar.setForeground(Color.WHITE);
 		btnActualizar.setBackground(new Color(0, 128, 128));
 		btnActualizar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
@@ -354,6 +356,7 @@ public class VentanaContactos extends JFrame {
 		panel_2_1_1.add(lblContacto);
 
 		btnLimpiar = new JButton("");
+		btnLimpiar.setToolTipText("Boton Limpiar - Inf: Limpia el formulario para crear nuevos registros.");
 		btnLimpiar.setBounds(10, 595, 50, 50);
 		panel_2_1_1.add(btnLimpiar);
 		btnLimpiar.setForeground(Color.BLACK);
@@ -417,6 +420,7 @@ public class VentanaContactos extends JFrame {
 		lblRegistros.setFont(new Font("Segoe UI", Font.BOLD, 20));
 
 		JButton lblRecargar = new JButton("");
+		lblRecargar.setToolTipText("Boton Recargar - Inf: Refresca la tabla con todos los registros.");
 		lblRecargar.setBackground(Color.WHITE);
 		lblRecargar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -432,6 +436,7 @@ public class VentanaContactos extends JFrame {
 		lblRecargar.setIcon(icono5);
 
 		btnImprimir = new JButton("");
+		btnImprimir.setToolTipText("Boton Imprimir - Inf: Imprime un reporte de todos los registros en formato pdf.");
 		btnImprimir.setBounds(487, 14, 35, 35);
 		panel_2.add(btnImprimir);
 		btnImprimir.setForeground(Color.WHITE);
@@ -442,7 +447,7 @@ public class VentanaContactos extends JFrame {
 		btnImprimir.setIcon(iconoImprimir);
 
 		btnEliminar = new JButton("");
-		btnEliminar.setToolTipText("Eliminar contacto seleccionado.");
+		btnEliminar.setToolTipText("Boton Borrar- Inf: Borra el registro despues de ser seleccionado.");
 		btnEliminar.setBounds(532, 12, 35, 35);
 		panel_2.add(btnEliminar);
 		btnEliminar.setForeground(Color.WHITE);
@@ -453,6 +458,7 @@ public class VentanaContactos extends JFrame {
 		btnEliminar.setIcon(iconoEliminar);
 
 		btnEditar = new JButton("");
+		btnEditar.setToolTipText("Boton Editar - Inf: Mueve la información al formulario para ser actualizada.");
 		btnEditar.setBounds(442, 14, 35, 35);
 		panel_2.add(btnEditar);
 		btnEditar.setForeground(Color.WHITE);
@@ -463,6 +469,7 @@ public class VentanaContactos extends JFrame {
 		btnEditar.setIcon(iconoEditar);
 		
 		btnCancelar = new JButton("");
+		btnCancelar.setToolTipText("Boton Cancelar - Inf: Cancela la operación actual.");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiar();

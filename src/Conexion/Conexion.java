@@ -10,7 +10,7 @@ public class Conexion {
 
 	private final String base = "agenda_db";
 	private final String user = "root";
-	private final String password = "";
+	private final String password = "0704";
 	public static String urlGlobal = "localhost";
 	private final String url = "jdbc:mysql://" + urlGlobal + "/" + base;
 	private Connection con = null;
