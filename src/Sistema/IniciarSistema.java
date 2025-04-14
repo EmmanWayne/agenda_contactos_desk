@@ -38,6 +38,7 @@ public class IniciarSistema {
 			contactos.obtenerUltimoId();
 			contactos.construirTabla();
 			contactos.btnActualizar.setEnabled(false);
+			contactos.btnCancelar.setEnabled(false);
 			Timer time = new Timer();
 			time.schedule(contactos.tarea, 0, 1000);
 

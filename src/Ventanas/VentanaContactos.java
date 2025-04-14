@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,7 +43,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SortOrder;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
@@ -54,6 +57,7 @@ import javax.swing.table.TableRowSorter;
 import Clases.Contacto;
 import Conexion.Conexion;
 import Consultas.ConsultasContactos;
+import java.util.Collections;
 
 public class VentanaContactos extends JFrame {
 
@@ -81,13 +85,14 @@ public class VentanaContactos extends JFrame {
 	public TableRowSorter<TableModel> trsfiltroCodigo;
 	String filtroCodigo;
 	public JTextField txtBuscar;
-	public JButton btnGuardar, btnActualizar, btnEliminar, btnEditar, btnLimpiar;
+	public JButton btnGuardar, btnActualizar, btnEliminar, btnEditar, btnLimpiar, btnCancelar, btnImprimir;
 	final ImageIcon foto = new ImageIcon(getClass().getResource("/Recursos/perfil.png"));
+	private TableRowSorter<TableModel> sorter;
 
 	public VentanaContactos() {
 		setResizable(false);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setBounds(100, 100, 950, 830);
+		setBounds(100, 100, 1100, 830);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -97,19 +102,19 @@ public class VentanaContactos extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/Recursos/contactos.png")));
 		final ImageIcon logo1 = new ImageIcon(getClass().getResource("/Recursos/fecha.png"));
 		final ImageIcon logo2 = new ImageIcon(getClass().getResource("/Recursos/hora.png"));
-		final ImageIcon logo = new ImageIcon(getClass().getResource("/Recursos/contactos.png"));
-		final ImageIcon logo4 = new ImageIcon(getClass().getResource("/Recursos/foto.png"));
-		final ImageIcon logo5 = new ImageIcon(getClass().getResource("/Recursos/recargar.png"));
-		final ImageIcon logo7 = new ImageIcon(getClass().getResource("/Recursos/acercade.png"));
-		
+		final ImageIcon logo3 = new ImageIcon(getClass().getResource("/Recursos/contactos.png"));
+		final ImageIcon logo4 = new ImageIcon(getClass().getResource("/Recursos/recargar.png"));
+		final ImageIcon logo5 = new ImageIcon(getClass().getResource("/Recursos/acercade.png"));
+		final ImageIcon logo6 = new ImageIcon(getClass().getResource("/Recursos/ordenar.png"));
+		final ImageIcon logo7 = new ImageIcon(getClass().getResource("/Recursos/ordenado.png"));
+
 		final ImageIcon guardar = new ImageIcon(getClass().getResource("/Recursos/guardar.png"));
 		final ImageIcon actualizar = new ImageIcon(getClass().getResource("/Recursos/actualizar.png"));
 		final ImageIcon eliminar = new ImageIcon(getClass().getResource("/Recursos/eliminar.png"));
-		final ImageIcon ver = new ImageIcon(getClass().getResource("/Recursos/mostrar.png"));
 		final ImageIcon limpiar = new ImageIcon(getClass().getResource("/Recursos/limpiar.png"));
-		final ImageIcon editar = new ImageIcon(getClass().getResource("/Recursos/editar.png"));
 		final ImageIcon imprimir = new ImageIcon(getClass().getResource("/Recursos/imprimir.png"));
 		final ImageIcon adjuntar = new ImageIcon(getClass().getResource("/Recursos/adjuntar.png"));
+		final ImageIcon cancelar = new ImageIcon(getClass().getResource("/Recursos/cancelar.png"));
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -122,12 +127,12 @@ public class VentanaContactos extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(0, 128, 128));
-		panel_1.setBounds(10, 11, 914, 762);
+		panel_1.setBounds(10, 11, 1064, 762);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
 		lblIconoFecha = new JLabel("");
-		lblIconoFecha.setBounds(170, 53, 33, 33);
+		lblIconoFecha.setBounds(251, 53, 33, 33);
 		panel_1.add(lblIconoFecha);
 		final ImageIcon icono = new ImageIcon(logo1.getImage().getScaledInstance(lblIconoFecha.getWidth(),
 				lblIconoFecha.getHeight(), Image.SCALE_DEFAULT));
@@ -141,13 +146,13 @@ public class VentanaContactos extends JFrame {
 
 		JLabel lblNombre = new JLabel("Télefono");
 		lblNombre.setForeground(Color.BLACK);
-		lblNombre.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
+		lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblNombre.setBounds(10, 119, 205, 27);
 		panel_2_1_1.add(lblNombre);
 
 		txtTelefono = new JTextField();
 		txtTelefono.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTelefono.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
+		txtTelefono.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		txtTelefono.setToolTipText("Escriba el número del contacto.");
 		txtTelefono.setBounds(10, 146, 372, 35);
 		panel_2_1_1.add(txtTelefono);
@@ -208,8 +213,8 @@ public class VentanaContactos extends JFrame {
 		btnActualizar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
 		btnActualizar.setBounds(272, 595, 50, 50);
 		panel_2_1_1.add(btnActualizar);
-		final ImageIcon iconoActualizar = new ImageIcon(actualizar.getImage().getScaledInstance(btnActualizar.getWidth(),
-				btnActualizar.getHeight(), Image.SCALE_DEFAULT));
+		final ImageIcon iconoActualizar = new ImageIcon(actualizar.getImage()
+				.getScaledInstance(btnActualizar.getWidth(), btnActualizar.getHeight(), Image.SCALE_DEFAULT));
 		btnActualizar.setIcon(iconoActualizar);
 		btnActualizar.addActionListener(new ActionListener() {
 			@Override
@@ -235,6 +240,8 @@ public class VentanaContactos extends JFrame {
 						btnActualizar.setEnabled(false);
 						btnEliminar.setEnabled(true);
 						btnLimpiar.setEnabled(true);
+						btnImprimir.setEnabled(true);
+						btnCancelar.setEnabled(false);
 					} else {
 						JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
 						limpiar();
@@ -244,6 +251,8 @@ public class VentanaContactos extends JFrame {
 						btnActualizar.setEnabled(false);
 						btnEliminar.setEnabled(true);
 						btnLimpiar.setEnabled(true);
+						btnImprimir.setEnabled(true);
+						btnCancelar.setEnabled(false);
 
 					}
 				}
@@ -253,7 +262,7 @@ public class VentanaContactos extends JFrame {
 
 		JLabel lblN = new JLabel("N°:");
 		lblN.setForeground(Color.BLACK);
-		lblN.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
+		lblN.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		lblN.setBounds(288, 11, 38, 38);
 		panel_2_1_1.add(lblN);
 
@@ -262,39 +271,39 @@ public class VentanaContactos extends JFrame {
 		lblId.setBounds(336, 11, 46, 38);
 		panel_2_1_1.add(lblId);
 		lblId.setHorizontalAlignment(SwingConstants.CENTER);
-		lblId.setFont(new Font("Segoe UI Black", Font.BOLD, 25));
+		lblId.setFont(new Font("Segoe UI", Font.BOLD, 20));
 
 		JLabel lblCodigoDelRol = new JLabel("Nombre");
 		lblCodigoDelRol.setForeground(Color.BLACK);
-		lblCodigoDelRol.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
+		lblCodigoDelRol.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblCodigoDelRol.setBounds(10, 59, 205, 27);
 		panel_2_1_1.add(lblCodigoDelRol);
 
 		txtNombre = new JTextField();
 		txtNombre.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNombre.setToolTipText("Escriba el nombre del contacto.");
-		txtNombre.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
+		txtNombre.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		txtNombre.setColumns(10);
 		txtNombre.setBounds(10, 86, 372, 35);
 		panel_2_1_1.add(txtNombre);
 
 		JLabel lblCorreo = new JLabel("Correo");
 		lblCorreo.setForeground(Color.BLACK);
-		lblCorreo.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
+		lblCorreo.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblCorreo.setBounds(10, 179, 205, 27);
 		panel_2_1_1.add(lblCorreo);
 
 		txtCorreo = new JTextField();
 		txtCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCorreo.setToolTipText("Escriba el email del contacto.");
-		txtCorreo.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
+		txtCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		txtCorreo.setColumns(10);
 		txtCorreo.setBounds(10, 206, 372, 35);
 		panel_2_1_1.add(txtCorreo);
 
 		JLabel lblFotog = new JLabel("Fotografía");
 		lblFotog.setForeground(Color.BLACK);
-		lblFotog.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
+		lblFotog.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblFotog.setBounds(10, 242, 372, 35);
 		panel_2_1_1.add(lblFotog);
 
@@ -310,23 +319,23 @@ public class VentanaContactos extends JFrame {
 		panel_2_1_1.add(panel_3);
 		panel_3.setLayout(null);
 		panel_3.add(lblFotografia);
-		
-				JButton btnAdjuntar = new JButton("");
-				btnAdjuntar.setBounds(327, 10, 35, 35);
-				panel_3.add(btnAdjuntar);
-				btnAdjuntar.setToolTipText("Seleccione la fotografía del contacto.");
-				btnAdjuntar.setForeground(Color.BLACK);
-				btnAdjuntar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
-				btnAdjuntar.setBackground(Color.LIGHT_GRAY);
-				final ImageIcon iconoAdjuntar = new ImageIcon(adjuntar.getImage().getScaledInstance(btnAdjuntar.getWidth(),
-						btnAdjuntar.getHeight(), Image.SCALE_DEFAULT));
-				btnAdjuntar.setIcon(iconoAdjuntar);
-				btnAdjuntar.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						selecionarLogo();
-					}
-				});
+
+		JButton btnAdjuntar = new JButton("");
+		btnAdjuntar.setBounds(327, 10, 35, 35);
+		panel_3.add(btnAdjuntar);
+		btnAdjuntar.setToolTipText("Seleccione la fotografía del contacto.");
+		btnAdjuntar.setForeground(Color.BLACK);
+		btnAdjuntar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
+		btnAdjuntar.setBackground(Color.LIGHT_GRAY);
+		final ImageIcon iconoAdjuntar = new ImageIcon(adjuntar.getImage().getScaledInstance(btnAdjuntar.getWidth(),
+				btnAdjuntar.getHeight(), Image.SCALE_DEFAULT));
+		btnAdjuntar.setIcon(iconoAdjuntar);
+		btnAdjuntar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selecionarLogo();
+			}
+		});
 
 		txtFotografia = new JTextField();
 		txtFotografia.setEditable(false);
@@ -340,62 +349,64 @@ public class VentanaContactos extends JFrame {
 		lblContacto = new JLabel("REGISTRO DE CONTACTO");
 		lblContacto.setHorizontalAlignment(SwingConstants.LEFT);
 		lblContacto.setForeground(Color.BLACK);
-		lblContacto.setFont(new Font("Segoe UI Historic", Font.BOLD, 20));
+		lblContacto.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		lblContacto.setBounds(10, 11, 372, 38);
 		panel_2_1_1.add(lblContacto);
-		
-				btnLimpiar = new JButton("");
-				btnLimpiar.setBounds(10, 595, 50, 50);
-				panel_2_1_1.add(btnLimpiar);
-				btnLimpiar.setForeground(Color.BLACK);
-				btnLimpiar.setBackground(Color.WHITE);
-				btnLimpiar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
-				final ImageIcon iconoLimpiar = new ImageIcon(limpiar.getImage().getScaledInstance(btnLimpiar.getWidth(),
-						btnLimpiar.getHeight(), Image.SCALE_DEFAULT));
-				btnLimpiar.setIcon(iconoLimpiar);
-				
-						btnLimpiar.addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								limpiar();
-								construirTabla();
-								obtenerUltimoId();
-							}
-						});
+
+		btnLimpiar = new JButton("");
+		btnLimpiar.setBounds(10, 595, 50, 50);
+		panel_2_1_1.add(btnLimpiar);
+		btnLimpiar.setForeground(Color.BLACK);
+		btnLimpiar.setBackground(Color.WHITE);
+		btnLimpiar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
+		final ImageIcon iconoLimpiar = new ImageIcon(limpiar.getImage().getScaledInstance(btnLimpiar.getWidth(),
+				btnLimpiar.getHeight(), Image.SCALE_DEFAULT));
+		btnLimpiar.setIcon(iconoLimpiar);
+
+		btnLimpiar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				limpiar();
+				construirTabla();
+				obtenerUltimoId();
+			}
+		});
 
 		JPanel panel_2_1_1_1 = new JPanel();
 		panel_2_1_1_1.setBackground(Color.WHITE);
-		panel_2_1_1_1.setBounds(412, 97, 492, 655);
+		panel_2_1_1_1.setBounds(412, 97, 642, 655);
 		panel_1.add(panel_2_1_1_1);
 		panel_2_1_1_1.setLayout(null);
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(Color.WHITE);
 		panel_2.setBorder(new LineBorder(new Color(0, 139, 139), 2));
-		panel_2.setBounds(10, 11, 472, 634);
+		panel_2.setBounds(10, 11, 622, 634);
 		panel_2_1_1_1.add(panel_2);
 		panel_2.setLayout(null);
 
 		barra = new JScrollPane(tabla, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		barra.setBounds(10, 101, 452, 523);
+		barra.setBounds(10, 101, 602, 523);
 		panel_2.add(barra);
 		tabla = new JTable();
 		tabla.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
 		barra.setViewportView(tabla);
+		TableRowSorter<TableModel> sorter = new TableRowSorter<>(tabla.getModel());
+		tabla.setRowSorter(sorter);
 
 		JLabel lblBuscar = new JLabel("Buscar:");
 		lblBuscar.setForeground(Color.BLACK);
-		lblBuscar.setFont(new Font("Segoe UI Light", Font.BOLD, 20));
+		lblBuscar.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblBuscar.setBounds(10, 56, 97, 35);
 		panel_2.add(lblBuscar);
 
 		txtBuscar = new JTextField();
 		txtBuscar.setHorizontalAlignment(SwingConstants.CENTER);
 		txtBuscar.setToolTipText("");
-		txtBuscar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
+		txtBuscar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		txtBuscar.setColumns(10);
-		txtBuscar.setBounds(89, 56, 373, 35);
+		txtBuscar.setBounds(89, 56, 523, 35);
 		panel_2.add(txtBuscar);
 
 		JLabel lblRegistros = new JLabel("LISTA DE CONTACTOS");
@@ -403,7 +414,7 @@ public class VentanaContactos extends JFrame {
 		lblRegistros.setBounds(10, 12, 282, 35);
 		panel_2.add(lblRegistros);
 		lblRegistros.setForeground(new Color(0, 0, 0));
-		lblRegistros.setFont(new Font("Segoe UI Historic", Font.BOLD, 20));
+		lblRegistros.setFont(new Font("Segoe UI", Font.BOLD, 20));
 
 		JButton lblRecargar = new JButton("");
 		lblRecargar.setBackground(Color.WHITE);
@@ -414,14 +425,14 @@ public class VentanaContactos extends JFrame {
 				construirTabla();
 			}
 		});
-		lblRecargar.setBounds(427, 12, 35, 35);
+		lblRecargar.setBounds(577, 14, 35, 35);
 		panel_2.add(lblRecargar);
-		final ImageIcon icono5 = new ImageIcon(logo5.getImage().getScaledInstance(lblRecargar.getWidth(),
+		final ImageIcon icono5 = new ImageIcon(logo4.getImage().getScaledInstance(lblRecargar.getWidth(),
 				lblRecargar.getHeight(), Image.SCALE_DEFAULT));
 		lblRecargar.setIcon(icono5);
 
-		JButton btnImprimir = new JButton("");
-		btnImprimir.setBounds(337, 10, 35, 35);
+		btnImprimir = new JButton("");
+		btnImprimir.setBounds(487, 14, 35, 35);
 		panel_2.add(btnImprimir);
 		btnImprimir.setForeground(Color.WHITE);
 		btnImprimir.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
@@ -432,7 +443,7 @@ public class VentanaContactos extends JFrame {
 
 		btnEliminar = new JButton("");
 		btnEliminar.setToolTipText("Eliminar contacto seleccionado.");
-		btnEliminar.setBounds(382, 10, 35, 35);
+		btnEliminar.setBounds(532, 12, 35, 35);
 		panel_2.add(btnEliminar);
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
@@ -442,7 +453,7 @@ public class VentanaContactos extends JFrame {
 		btnEliminar.setIcon(iconoEliminar);
 
 		btnEditar = new JButton("");
-		btnEditar.setBounds(292, 10, 35, 35);
+		btnEditar.setBounds(442, 14, 35, 35);
 		panel_2.add(btnEditar);
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Segoe UI Light", Font.BOLD, 15));
@@ -450,6 +461,19 @@ public class VentanaContactos extends JFrame {
 		final ImageIcon iconoEditar = new ImageIcon(actualizar.getImage().getScaledInstance(btnEditar.getWidth(),
 				btnEditar.getHeight(), Image.SCALE_DEFAULT));
 		btnEditar.setIcon(iconoEditar);
+		
+		btnCancelar = new JButton("");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiar();
+			}
+		});
+		btnCancelar.setBackground(Color.WHITE);
+		btnCancelar.setBounds(397, 14, 35, 35);
+		panel_2.add(btnCancelar);
+		final ImageIcon iconoCancelar = new ImageIcon(cancelar.getImage().getScaledInstance(btnCancelar.getWidth(),
+				btnCancelar.getHeight(), Image.SCALE_DEFAULT));
+		btnCancelar.setIcon(iconoCancelar);
 
 		btnEditar.addActionListener(new ActionListener() {
 			@Override
@@ -484,6 +508,8 @@ public class VentanaContactos extends JFrame {
 						btnEliminar.setEnabled(false);
 						btnEditar.setEnabled(true);
 						btnLimpiar.setEnabled(false);
+						btnImprimir.setEnabled(false);
+						btnCancelar.setEnabled(true);
 
 					}
 
@@ -593,7 +619,7 @@ public class VentanaContactos extends JFrame {
 		lblFecha.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblFecha.setForeground(Color.WHITE);
 		lblFecha.setFont(new Font("Arial Black", Font.BOLD, 20));
-		lblFecha.setBounds(87, 53, 454, 33);
+		lblFecha.setBounds(193, 53, 427, 33);
 		panel_1.add(lblFecha);
 		lblFecha.setText(getFecha());
 
@@ -601,18 +627,18 @@ public class VentanaContactos extends JFrame {
 		lblHora.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHora.setForeground(Color.WHITE);
 		lblHora.setFont(new Font("Arial Black", Font.BOLD, 20));
-		lblHora.setBounds(594, 53, 266, 33);
+		lblHora.setBounds(681, 53, 266, 33);
 		panel_1.add(lblHora);
 
 		lblVentana = new JLabel("AGENDA DE CONTACTOS");
-		lblVentana.setBounds(10, 8, 894, 38);
+		lblVentana.setBounds(10, 8, 1044, 38);
 		panel_1.add(lblVentana);
 		lblVentana.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVentana.setForeground(Color.WHITE);
 		lblVentana.setFont(new Font("Arial Black", Font.BOLD, 30));
 
 		lblIconoHora = new JLabel("");
-		lblIconoHora.setBounds(551, 53, 33, 33);
+		lblIconoHora.setBounds(638, 53, 33, 33);
 		panel_1.add(lblIconoHora);
 		final ImageIcon icono2 = new ImageIcon(logo2.getImage().getScaledInstance(lblIconoHora.getWidth(),
 				lblIconoHora.getHeight(), Image.SCALE_DEFAULT));
@@ -622,15 +648,15 @@ public class VentanaContactos extends JFrame {
 		lblLogo.setBounds(10, 11, 78, 75);
 		panel_1.add(lblLogo);
 		final ImageIcon icono9 = new ImageIcon(
-				logo.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
+				logo3.getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_DEFAULT));
 		lblLogo.setIcon(icono9);
 
 		lblAcercaDe = new JLabel("");
-		lblAcercaDe.setBounds(826, 11, 78, 75);
+		lblAcercaDe.setBounds(976, 8, 78, 75);
 		panel_1.add(lblAcercaDe);
-		final ImageIcon icono7 = new ImageIcon(logo7.getImage().getScaledInstance(lblAcercaDe.getWidth(),
+		final ImageIcon icono10 = new ImageIcon(logo5.getImage().getScaledInstance(lblAcercaDe.getWidth(),
 				lblAcercaDe.getHeight(), Image.SCALE_DEFAULT));
-		lblAcercaDe.setIcon(icono7);
+		lblAcercaDe.setIcon(icono10);
 		lblAcercaDe.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -679,14 +705,32 @@ public class VentanaContactos extends JFrame {
 		String titulos[] = { "N°", "Nombre", "Télefono", "Correo", "Ruta Fotografía" };
 		String informacion[][] = obtenerMatriz();
 		tabla = new JTable(informacion, titulos);
+		TableRowSorter<TableModel> sorter = new TableRowSorter<>(tabla.getModel());
+		tabla.setRowSorter(sorter);
 		barra.setViewportView(tabla);
+		
+		int columna = 1; // Nombre
+
+		if (columna >= 0 && columna < tabla.getColumnCount()) {
+		    sorter.setSortKeys(Collections.singletonList(new RowSorter.SortKey(columna, SortOrder.ASCENDING)));
+		} else {
+		    System.out.println("Índice de columna inválido para ordenar.");
+		}
+
+
 		for (int c = 0; c < tabla.getColumnCount(); c++) {
 			Class<?> col_class = tabla.getColumnClass(c);
 			tabla.setDefaultEditor(col_class, null);
 			tabla.getTableHeader().setReorderingAllowed(false);
-			tabla.getColumnModel().getColumn(0).setPreferredWidth(20);
+			int[] anchos = {30, 100, 100, 150, 200};
+			for (int i = 0; i < tabla.getColumnCount(); i++) {
+			    tabla.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+			}
 
 		}
+
+		this.sorter = sorter;
+
 	}
 
 	public static ArrayList<Contacto> buscarUsuariosConMatriz() {
