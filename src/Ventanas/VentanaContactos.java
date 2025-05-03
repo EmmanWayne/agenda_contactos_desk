@@ -372,6 +372,11 @@ public class VentanaContactos extends JFrame {
 				limpiar();
 				construirTabla();
 				obtenerUltimoId();
+				btnGuardar.setEnabled(true);
+				btnActualizar.setEnabled(false);
+				btnEliminar.setEnabled(true);
+				btnLimpiar.setEnabled(true);
+				btnImprimir.setEnabled(true);
 			}
 		});
 
@@ -473,6 +478,13 @@ public class VentanaContactos extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiar();
+				construirTabla();
+				obtenerUltimoId();
+				btnGuardar.setEnabled(true);
+				btnActualizar.setEnabled(false);
+				btnEliminar.setEnabled(true);
+				btnLimpiar.setEnabled(true);
+				btnImprimir.setEnabled(true);
 			}
 		});
 		btnCancelar.setBackground(Color.WHITE);
